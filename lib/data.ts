@@ -97,3 +97,6 @@ export const ventasMensuales = [
 ]
 
 export const UMBRAL_INACTIVIDAD_DIAS = 90
+
+// Último número de cotización emitido — incrementar al crear una nueva
+export const ULTIMO_NUMERO_COTIZACION = 466
