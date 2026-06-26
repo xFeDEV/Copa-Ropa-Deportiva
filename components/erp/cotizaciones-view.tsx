@@ -336,12 +336,12 @@ export function CotizacionesView() {
   const [fecha, setFecha] = useState(() => new Date().toISOString().slice(0, 10))
 
   // Artículo en edición
-  const [cantidad, setCantidad] = useState<number>(1)
+  const [cantidad, setCantidad] = useState<number | "">(1)
   const [tipo, setTipo] = useState(tiposProducto[0])
   const [tela, setTela] = useState(telas[0])
   const [composicion, setComposicion] = useState("100% POLIESTER")
   const [tipoDecoracion, setTipoDecoracion] = useState(tiposDecoracion[0])
-  const [precio, setPrecio] = useState<number>(0)
+  const [precio, setPrecio] = useState<number | "">("")
   const [renderUrl, setRenderUrl] = useState<string | null>(null)
   const [renderNombre, setRenderNombre] = useState<string | null>(null)
 
@@ -350,12 +350,12 @@ export function CotizacionesView() {
 
   const articuloActual: Articulo = {
     id: "preview",
-    cantidad,
+    cantidad: cantidad === "" ? 0 : cantidad,
     tipo,
     tela,
     composicion,
     tipoDecoracion,
-    precioUnitario: precio,
+    precioUnitario: precio === "" ? 0 : precio,
     renderUrl,
   }
 
@@ -527,7 +527,10 @@ export function CotizacionesView() {
                   type="number"
                   min={1}
                   value={cantidad}
-                  onChange={(e) => setCantidad(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setCantidad(val === "" ? "" : Number(val));
+                  }}
                 />
               </div>
               <div className="space-y-2">
@@ -537,7 +540,10 @@ export function CotizacionesView() {
                   type="number"
                   min={0}
                   value={precio}
-                  onChange={(e) => setPrecio(Number(e.target.value))}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    setPrecio(val === "" ? "" : Number(val));
+                  }}
                   placeholder="65000"
                 />
               </div>
