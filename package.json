@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "packageManager": "pnpm@11.7.0",
+  "overrides": {
+    "hono": "4.12.25"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
