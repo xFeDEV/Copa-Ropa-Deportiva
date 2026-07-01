@@ -31,16 +31,16 @@ export function ClienteCRUDDialog({
   onEditar,
   onEliminar,
 }: Props) {
-  // Form nuevo cliente
   const [nuevoNombre, setNuevoNombre] = useState("")
   const [nuevoNit, setNuevoNit] = useState("")
   const [nuevoTelefono, setNuevoTelefono] = useState("")
+  const [nuevoDireccion, setNuevoDireccion] = useState("")
 
-  // Edición inline
   const [editandoId, setEditandoId] = useState<string | null>(null)
   const [editNombre, setEditNombre] = useState("")
   const [editNit, setEditNit] = useState("")
   const [editTelefono, setEditTelefono] = useState("")
+  const [editDireccion, setEditDireccion] = useState("")
 
   const nombreRef = useRef<HTMLInputElement>(null)
 
@@ -51,10 +51,12 @@ export function ClienteCRUDDialog({
       nombre: nuevoNombre.trim(),
       nit: nuevoNit.trim(),
       telefono: nuevoTelefono.trim(),
+      direccion: nuevoDireccion.trim(),
     })
     setNuevoNombre("")
     setNuevoNit("")
     setNuevoTelefono("")
+    setNuevoDireccion("")
     nombreRef.current?.focus()
   }
 
@@ -64,6 +66,7 @@ export function ClienteCRUDDialog({
     setEditNombre(c.nombre)
     setEditNit(c.nit)
     setEditTelefono(c.telefono)
+    setEditDireccion(c.direccion || "")
   }
 
   // ── Confirmar edición ──────────────────────────────────────────────────────
@@ -73,6 +76,7 @@ export function ClienteCRUDDialog({
         nombre: editNombre.trim(),
         nit: editNit.trim(),
         telefono: editTelefono.trim(),
+        direccion: editDireccion.trim(),
       })
     }
     cancelarEdicion()
@@ -84,6 +88,7 @@ export function ClienteCRUDDialog({
     setEditNombre("")
     setEditNit("")
     setEditTelefono("")
+    setEditDireccion("")
   }
 
   return (
@@ -147,6 +152,13 @@ export function ClienteCRUDDialog({
                 className="text-sm"
               />
             </div>
+            <Input
+              placeholder="Dirección"
+              value={nuevoDireccion}
+              onChange={(e) => setNuevoDireccion(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleAgregar()}
+              className="text-sm"
+            />
           </div>
 
           {/* ── Lista de clientes ─────────────────────────────────── */}
@@ -215,6 +227,16 @@ export function ClienteCRUDDialog({
                         placeholder="Teléfono"
                       />
                     </div>
+                    <Input
+                      value={editDireccion}
+                      onChange={(e) => setEditDireccion(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") confirmarEdicion()
+                        if (e.key === "Escape") cancelarEdicion()
+                      }}
+                      className="h-8 text-sm"
+                      placeholder="Dirección"
+                    />
                   </div>
                 ) : (
                   /* ── Modo lectura ────────────────────────────── */

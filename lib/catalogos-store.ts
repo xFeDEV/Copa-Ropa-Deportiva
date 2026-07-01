@@ -27,6 +27,7 @@ export interface ClienteCatalogo {
   nombre: string
   nit: string
   telefono: string
+  direccion: string
 }
 
 export type TipoCatalogo = "tiposProducto" | "telas" | "tiposDecoracion" | "composiciones"
@@ -78,13 +79,13 @@ const SEED_CATALOGOS: Catalogos = {
 }
 
 const SEED_CLIENTES: ClienteCatalogo[] = [
-  { id: "cl-1", nombre: "Club Deportivo Los Andes", nit: "900.123.456-7", telefono: "+57 310 555 1234" },
-  { id: "cl-2", nombre: "Colegio San Mateo", nit: "830.987.654-3", telefono: "+57 320 555 8899" },
-  { id: "cl-3", nombre: "Gimnasio FitZone S.A.S", nit: "901.456.789-1", telefono: "+57 315 555 4567" },
-  { id: "cl-4", nombre: "Liga Municipal de Fútbol", nit: "800.321.654-9", telefono: "+57 301 555 7788" },
-  { id: "cl-5", nombre: "Academia Tenis Pro", nit: "901.111.222-4", telefono: "+57 312 555 3322" },
-  { id: "cl-6", nombre: "Empresa Constructora Vial", nit: "860.555.111-2", telefono: "+57 318 555 9090" },
-  { id: "cl-7", nombre: "Equipo Atlético Bolívar", nit: "901.777.888-5", telefono: "+57 311 555 1212" },
+  { id: "cl-1", nombre: "Club Deportivo Los Andes", nit: "900.123.456-7", telefono: "+57 310 555 1234", direccion: "" },
+  { id: "cl-2", nombre: "Colegio San Mateo", nit: "830.987.654-3", telefono: "+57 320 555 8899", direccion: "" },
+  { id: "cl-3", nombre: "Gimnasio FitZone S.A.S", nit: "901.456.789-1", telefono: "+57 315 555 4567", direccion: "" },
+  { id: "cl-4", nombre: "Liga Municipal de Fútbol", nit: "800.321.654-9", telefono: "+57 301 555 7788", direccion: "" },
+  { id: "cl-5", nombre: "Academia Tenis Pro", nit: "901.111.222-4", telefono: "+57 312 555 3322", direccion: "" },
+  { id: "cl-6", nombre: "Empresa Constructora Vial", nit: "860.555.111-2", telefono: "+57 318 555 9090", direccion: "" },
+  { id: "cl-7", nombre: "Equipo Atlético Bolívar", nit: "901.777.888-5", telefono: "+57 311 555 1212", direccion: "" },
 ]
 
 const SEED: CatalogosExtendidos = {

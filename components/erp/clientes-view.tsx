@@ -35,7 +35,7 @@ export function ClientesView() {
 
   const handleAgregar = () => {
     if (!nuevoNombre.trim()) return
-    agregarCliente({ nombre: nuevoNombre.trim(), nit: nuevoNit.trim(), telefono: nuevoTelefono.trim() })
+    agregarCliente({ nombre: nuevoNombre.trim(), nit: nuevoNit.trim(), telefono: nuevoTelefono.trim(), direccion: "" })
     setNuevoNombre(""); setNuevoNit(""); setNuevoTelefono("")
     setShowAdd(false)
   }
@@ -46,7 +46,7 @@ export function ClientesView() {
 
   const confirmarEdicion = () => {
     if (editId && editNombre.trim()) {
-      editarCliente(editId, { nombre: editNombre.trim(), nit: editNit.trim(), telefono: editTelefono.trim() })
+      editarCliente(editId, { nombre: editNombre.trim(), nit: editNit.trim(), telefono: editTelefono.trim(), direccion: "" })
     }
     setEditId(null)
   }

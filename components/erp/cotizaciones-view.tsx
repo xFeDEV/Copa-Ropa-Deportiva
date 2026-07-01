@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { Textarea } from "@/components/ui/textarea"
 import {
   Select,
   SelectContent,
@@ -121,12 +122,15 @@ function ZonaUpload({
 // ─── Documento oculto PDF ─────────────────────────────────────────────────────
 
 function DocumentoCotizacion({
-  elRef, numeroCotizacion, cliente, nit, fecha, itemsPreview, total, formatearFechaLarga,
+  elRef, numeroCotizacion, cliente, nit, telefono, direccion, detalles, fecha, itemsPreview, total, formatearFechaLarga,
 }: {
   elRef: React.RefObject<HTMLDivElement | null>
   numeroCotizacion: string
   cliente: string
   nit: string
+  telefono: string
+  direccion: string
+  detalles: string
   fecha: string
   itemsPreview: Articulo[]
   total: number
@@ -144,9 +148,9 @@ function DocumentoCotizacion({
         </div>
         <div style={{ borderTop: "1px solid #ccc", marginTop: "14px" }} />
         <div style={{ marginTop: "20px", display: "flex", flexDirection: "column", gap: "12px" }}>
-          {[{ label: "FECHA:", valor: formatearFechaLarga(fecha) }, { label: "CLIENTE:", valor: cliente }, { label: "NIT:", valor: nit }].map(({ label, valor }) => (
+          {[{ label: "FECHA:", valor: formatearFechaLarga(fecha) }, { label: "CLIENTE:", valor: cliente }, { label: "NIT:", valor: nit }, { label: "TELÉFONO:", valor: telefono }, { label: "DIRECCIÓN:", valor: direccion }].map(({ label, valor }) => (
             <div key={label} style={{ display: "flex", alignItems: "flex-end", gap: "12px" }}>
-              <span style={{ fontWeight: 700, fontSize: "13px", minWidth: "70px", whiteSpace: "nowrap" }}>{label}</span>
+              <span style={{ fontWeight: 700, fontSize: "13px", minWidth: "90px", whiteSpace: "nowrap" }}>{label}</span>
               <span style={{ fontSize: "14px", borderBottom: "1.5px solid #333", flex: 1, paddingBottom: "6px", minHeight: "26px" }}>{valor || "\u00a0"}</span>
             </div>
           ))}
@@ -154,6 +158,7 @@ function DocumentoCotizacion({
         <div style={{ marginTop: "24px", fontSize: "13px", lineHeight: "1.6" }}>
           <p style={{ margin: 0 }}>Cordial saludo,</p>
           <p style={{ margin: 0 }}>Por medio de la presente hacemos cotización de los siguientes artículos:</p>
+          {detalles && <p style={{ margin: "8px 0 0", fontStyle: "italic", color: "#333" }}>{detalles}</p>}
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse", marginTop: "16px", fontSize: "12px" }}>
           <thead>
@@ -224,6 +229,9 @@ export function CotizacionesView() {
   const [clienteId, setClienteId] = useState("")
   const [clienteNombre, setClienteNombre] = useState("")
   const [nit, setNit] = useState("")
+  const [telefono, setTelefono] = useState("")
+  const [direccion, setDireccion] = useState("")
+  const [detalles, setDetalles] = useState("")
   const [fecha, setFecha] = useState(() => new Date().toISOString().slice(0, 10))
 
   // Al seleccionar cliente, auto-llenar NIT
@@ -233,6 +241,8 @@ export function CotizacionesView() {
     if (found) {
       setClienteNombre(found.nombre)
       setNit(found.nit)
+      setTelefono(found.telefono)
+      setDireccion(found.direccion || "")
     }
   }
 
@@ -441,6 +451,18 @@ export function CotizacionesView() {
                 <Label htmlFor="nit">NIT</Label>
                 <Input id="nit" value={nit} onChange={(e) => setNit(e.target.value)} placeholder="Se llena automáticamente al seleccionar cliente" />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="telefono">Teléfono</Label>
+                <Input id="telefono" value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Teléfono de contacto" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="direccion">Dirección</Label>
+                <Input id="direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)} placeholder="Dirección de entrega" />
+              </div>
+              <div className="col-span-2 space-y-2">
+                <Label htmlFor="detalles">Detalles / Observaciones</Label>
+                <Textarea id="detalles" value={detalles} onChange={(e) => setDetalles(e.target.value)} placeholder="Notas adicionales, especificaciones, observaciones…" className="min-h-[60px]" />
+              </div>
             </div>
           </CardContent>
         </Card>
@@ -557,6 +579,9 @@ export function CotizacionesView() {
         numeroCotizacion={numeroCotizacion}
         cliente={clienteNombre}
         nit={nit}
+        telefono={telefono}
+        direccion={direccion}
+        detalles={detalles}
         fecha={fecha}
         itemsPreview={itemsPreview}
         total={total}
