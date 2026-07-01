@@ -134,7 +134,7 @@ export function CatalogoCRUDDialog({
                         if (e.key === "Enter") confirmarEdicion()
                         if (e.key === "Escape") cancelarEdicion()
                       }}
-                      className="h-8 flex-1 text-sm uppercase"
+                      className="h-8 flex-1 text-sm uppercase min-w-0"
                       autoFocus
                     />
                     <Button
@@ -159,7 +159,9 @@ export function CatalogoCRUDDialog({
                 ) : (
                   /* ── Modo lectura ─────────────────────────────── */
                   <>
-                    <span className="flex-1 text-sm truncate font-medium">{item.nombre}</span>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm truncate font-medium">{item.nombre}</p>
+                    </div>
                     <Button
                       type="button"
                       size="icon"
