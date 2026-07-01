@@ -26,27 +26,29 @@ export function ClientesView() {
   const [nuevoNombre, setNuevoNombre] = useState("")
   const [nuevoNit, setNuevoNit] = useState("")
   const [nuevoTelefono, setNuevoTelefono] = useState("")
+  const [nuevoDireccion, setNuevoDireccion] = useState("")
 
   // Edición inline
   const [editId, setEditId] = useState<string | null>(null)
   const [editNombre, setEditNombre] = useState("")
   const [editNit, setEditNit] = useState("")
   const [editTelefono, setEditTelefono] = useState("")
+  const [editDireccion, setEditDireccion] = useState("")
 
   const handleAgregar = () => {
     if (!nuevoNombre.trim()) return
-    agregarCliente({ nombre: nuevoNombre.trim(), nit: nuevoNit.trim(), telefono: nuevoTelefono.trim(), direccion: "" })
-    setNuevoNombre(""); setNuevoNit(""); setNuevoTelefono("")
+    agregarCliente({ nombre: nuevoNombre.trim(), nit: nuevoNit.trim(), telefono: nuevoTelefono.trim(), direccion: nuevoDireccion.trim() })
+    setNuevoNombre(""); setNuevoNit(""); setNuevoTelefono(""); setNuevoDireccion("")
     setShowAdd(false)
   }
 
   const iniciarEdicion = (c: typeof clientes[0]) => {
-    setEditId(c.id); setEditNombre(c.nombre); setEditNit(c.nit); setEditTelefono(c.telefono)
+    setEditId(c.id); setEditNombre(c.nombre); setEditNit(c.nit); setEditTelefono(c.telefono); setEditDireccion(c.direccion || "")
   }
 
   const confirmarEdicion = () => {
     if (editId && editNombre.trim()) {
-      editarCliente(editId, { nombre: editNombre.trim(), nit: editNit.trim(), telefono: editTelefono.trim(), direccion: "" })
+      editarCliente(editId, { nombre: editNombre.trim(), nit: editNit.trim(), telefono: editTelefono.trim(), direccion: editDireccion.trim() })
     }
     setEditId(null)
   }
@@ -70,11 +72,12 @@ export function ClientesView() {
       {showAdd && (
         <Card className="border-dashed">
           <CardContent className="pt-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
               <Input placeholder="Nombre / Razón social" value={nuevoNombre} onChange={(e) => setNuevoNombre(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAgregar()} autoFocus />
               <Input placeholder="NIT" value={nuevoNit} onChange={(e) => setNuevoNit(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAgregar()} />
+              <Input placeholder="Teléfono" value={nuevoTelefono} onChange={(e) => setNuevoTelefono(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAgregar()} />
               <div className="flex gap-2">
-                <Input placeholder="Teléfono" value={nuevoTelefono} onChange={(e) => setNuevoTelefono(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAgregar()} className="flex-1" />
+                <Input placeholder="Dirección" value={nuevoDireccion} onChange={(e) => setNuevoDireccion(e.target.value)} onKeyDown={(e) => e.key === "Enter" && handleAgregar()} className="flex-1" />
                 <Button onClick={handleAgregar} disabled={!nuevoNombre.trim()} size="icon" className="shrink-0"><Plus className="size-4" /></Button>
               </div>
             </div>
@@ -94,13 +97,14 @@ export function ClientesView() {
                   <TableHead>Nombre / Razón Social</TableHead>
                   <TableHead>NIT</TableHead>
                   <TableHead>Teléfono</TableHead>
+                  <TableHead>Dirección</TableHead>
                   <TableHead className="text-right w-[100px]">Acciones</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {clientes.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={4} className="text-center py-8 text-muted-foreground">
+                    <TableCell colSpan={5} className="text-center py-8 text-muted-foreground">
                       No hay clientes registrados. Agrega el primero.
                     </TableCell>
                   </TableRow>
@@ -117,6 +121,9 @@ export function ClientesView() {
                         </TableCell>
                         <TableCell>
                           <Input value={editTelefono} onChange={(e) => setEditTelefono(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") confirmarEdicion(); if (e.key === "Escape") setEditId(null) }} className="h-8 text-sm" />
+                        </TableCell>
+                        <TableCell>
+                          <Input value={editDireccion} onChange={(e) => setEditDireccion(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") confirmarEdicion(); if (e.key === "Escape") setEditId(null) }} className="h-8 text-sm" />
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">
@@ -135,6 +142,7 @@ export function ClientesView() {
                             {c.telefono}
                           </span>
                         </TableCell>
+                        <TableCell className="text-sm text-muted-foreground">{c.direccion || "Sin dirección"}</TableCell>
                         <TableCell className="text-right">
                           <div className="flex justify-end gap-1">
                             <Button type="button" size="icon" variant="ghost" onClick={() => iniciarEdicion(c)} className="h-8 w-8 text-muted-foreground hover:text-foreground"><Pencil className="size-3.5" /></Button>

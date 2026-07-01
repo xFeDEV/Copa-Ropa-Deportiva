@@ -459,10 +459,6 @@ export function CotizacionesView() {
                 <Label htmlFor="direccion">Dirección</Label>
                 <Input id="direccion" value={direccion} onChange={(e) => setDireccion(e.target.value)} placeholder="Dirección de entrega" />
               </div>
-              <div className="col-span-2 space-y-2">
-                <Label htmlFor="detalles">Detalles / Observaciones</Label>
-                <Textarea id="detalles" value={detalles} onChange={(e) => setDetalles(e.target.value)} placeholder="Notas adicionales, especificaciones, observaciones…" className="min-h-[60px]" />
-              </div>
             </div>
           </CardContent>
         </Card>
@@ -489,6 +485,11 @@ export function CotizacionesView() {
               <SelectConCRUD id="tela" label="Tela" tipo="telas" value={tela} onValue={setTela} />
               <SelectConCRUD id="decoracion" label="Tipo de Decoración" tipo="tiposDecoracion" value={tipoDecoracion} onValue={setTipoDecoracion} />
               <SelectConCRUD id="composicion" label="Composición" tipo="composiciones" value={composicion} onValue={setComposicion} span2 />
+
+              <div className="col-span-2 space-y-2">
+                <Label htmlFor="detalles">Detalles / Observaciones (de la Cotización)</Label>
+                <Textarea id="detalles" value={detalles} onChange={(e) => setDetalles(e.target.value)} placeholder="Notas adicionales, especificaciones, observaciones…" className="min-h-[60px]" />
+              </div>
             </div>
 
             <Separator />
